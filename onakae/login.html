@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>เรียกรับยา</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="rxqstyle.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18"></script>
+        <script src="https://api.ipify.org?format=jsonp&callback=getIPAddress"></script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/5.2.0/js/tableexport.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- <script src="rxqscript.js"></script> -->
+
+    </head>
+    <style>
+        .pcontainer {
+
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+
+
+        }
+
+        .pcolumn {
+            flex: 1;
+            /* padding: 10px; */
+            border: 0px solid #ccc;
+            /* background-color: #999999; */
+            overflow: auto;
+            /* ให้เพิ่ม scrollbar ในกรณีเนื้อหายาว */
+            /* padding: 20px; */
+            /* border: 1px solid #ccc; */
+
+        }
+
+        .p1 {
+            flex: 85;
+
+        }
+
+        .p2 {
+            flex: 15;
+            background-color: #999999;
+
+        }
+    </style>
+
+    <body>
+
+        <!-- <span style="float: left;">&nbsp;&nbsp;ระบบเรียกรับยาโรงพยาบาลนาแก อ.นาแก จ.นครพนม</span> -->
+        <!-- <nav class="navbar navbar-expand-sm bg-light "> -->
+        <div class="pcontainer">
+            <div class="pcolumn p1">
+                <!-- <img id="img" class="home" src="nakae.png" alt="" ; style="width:20%; margin-bottom: 1px; display: flex;
+     justify-content: center;   align-items: center;margin-top: 10px;margin-left: 10px; "> -->
+                <span style="font-size: 20px;">&nbsp;&nbsp;<b>ONAKAE</b> &nbsp;:&nbsp;ระบบเรียกรับยา</span>
+                &nbsp;&nbsp;&nbsp;<span id="localname"></span>
+                <br><br>
+                <label>&nbsp;&nbsp;&nbsp;Login for HOSxP</label><br>
+                &nbsp;&nbsp;
+                <label for="txtUsername"> Username :</label>&nbsp;
+                <input type="text" style="width:150px;" id="txtUsername" autocomplete="off">&nbsp;&nbsp;
+                <label for="txtPassword"> Password :</label>&nbsp;
+                <input type="password" style="width:150px;" id="txtPassword" autocomplete="off">&nbsp;&nbsp;
+                <span>ช่องรับยา:&nbsp;</span>
+                <input type="text" style="width:50px;" id="Chanelname">&nbsp;&nbsp;
+
+                <button id="login">Login</button>
+
+                <input type="hidden" id="print_server">
+                <input type="hidden" id="ptcall">
+                <!-- <h4>เรียกรับยาโรงพยาบาลนาแก อ.นาแก จ.นครพนม</h4> -->
+                <!-- </nav> -->
+            </div>
+            <div class="pcolumn p2">
+                <h4>ตั้งค่าระบบ</h4>
+                <!-- <button id="voice" onclick="selectChanel()" class="btn btn-light btn-sm">
+                    <i id="microphone-icon" class="fa fa-microphone"
+                        aria-hidden="true"></i>&nbsp;ตั้งค่าเชื่อมต่่อเครื่องเสียง
+                </button> -->
+
+                <button id="Youtubeclip" onclick="showClipYoutube()" class="btn btn-light btn-sm">
+                    <i class="fa fa-youtube" aria-hidden="true"></i>&nbsp;คลิป Youtube-> จอทีวี
+                </button>
+
+
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                getptcallchanel();
+                getchanel();
+                $("#txtUsername").focus();
+            });
+
+            $(document).ready(function () {
+
+                $('#txtUsername').on('keypress', function (event) {
+                    if (event.which === 13) {
+                        // event.preventDefault();
+                        $('#txtPassword').focus();
+                        $('#txtPassword').select();
+                        // alert($(this).val());
+                        // alert(pwd);
+                        // alert(chanel);
+                    }
+                });
+
+                $('#txtPassword').on('keypress', function (event) {
+                    if (event.which === 13) {
+
+                        // event.preventDefault();
+                        $('#Chanelname').focus();
+
+                        $('#Chanelname').select();
+                        // alert($(this).val());
+                    }
+                });
+
+                $('#Chanelname').on('keypress', function (event) {
+                    if (event.which === 13) {
+                        checkuserlogin();
+
+                    }
+                });
+
+
+                $('#login').on('click', function () {
+
+                    checkuserlogin();
+
+
+                });
+
+
+            });
+
+
+
+            function getptcallchanel() {
+                $.ajax({
+                    url: 'getptcallchanel.php',
+                    dataType: "json",
+                    success: function (data) {
+                        // console.log(data)
+                        // $('#Chanelname').val(data[0].chanel);
+                        $('#ptcall').val(data[0].chanel);
+                    }
+                });
+
+            }
+            function getYoutubeclip() {
+                return new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: 'tvyoutube.php',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.length > 0) {
+                                resolve(data[0].video_id);
+                            } else {
+                                resolve('<iframe width="560" height="315" src="https://www.youtube.com/embed/9scnDD8-1T4?si=T3meL6Fwmf4B2tPY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>');
+                            }
+                        },
+                        error: function () {
+                            reject('เกิดข้อผิดพลาดในการดึงข้อมูลจากเซิร์ฟเวอร์');
+                        }
+                    });
+                });
+            }
+
+
+            function getchanel() {
+
+                $.ajax({
+                    url: 'getchanel.php',
+                    // method: 'POST', // เปลี่ยน method เป็น 'POST'
+                    // data: { hn: searchText },
+                    dataType: "json",
+                    success: function (data) {
+                        // console.log(data)
+                        $('#Chanelname').val(data[0].chanel);
+                        $('#print_server').val(data[0].print_server);
+                        // $('#ptcall').val(data[0].ptcall);
+
+                    }
+                });
+
+            }
+
+            function checkuserlogin() {
+
+                var usr = $('#txtUsername').val();
+                var pwd = $('#txtPassword').val();
+                var chanelname = $('#Chanelname').val();
+                var print_server = $('#print_server').val();
+                var ptcall = $('#ptcall').val();
+                if (print_server === '') {
+                    print_server = 'OPD';
+                }
+
+                // alert(print_server)
+
+                if (usr == '') {
+                    alert('Username ห้ามว่าง');
+                    $('#txtUsername').focus();
+                } else if (pwd == '') {
+                    alert('Password ห้ามว่าง');
+                    $('#txtPassword').focus();
+                } else if (chanelname == '') {
+                    alert('ช่องจ่ายยาห้ามว่าง');
+                    $('#Chanelname').focus();
+                } else {
+
+                    $.ajax({
+                        url: 'getlogin.php',
+                        method: 'GET',
+                        data: { username: usr, password: pwd, chanel: chanelname },
+                        success: function (data) {
+                            // Assuming that the response from getlogin.php is a JSON object
+                            if (data.length > 0) {
+
+
+                                var fullname = data[0].name;
+                                localStorage.setItem('fullname', fullname);
+                                localStorage.setItem('chanel', chanelname);
+                                localStorage.setItem('print_server', print_server);
+                                localStorage.setItem('ptcall', ptcall);
+
+                                window.location.href = 'index.html';
+
+
+                            } else {
+
+                                alert('เข้าสู่ระบบไม่สำเร็จ');
+                            }
+                        }
+                        ,
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                            // alert('เกิดข้อผิดพลาดในการเชื่อมต่อ');
+
+                            localStorage.setItem('fullname', usr);
+                            localStorage.setItem('chanel', chanelname);
+                            localStorage.setItem('print_server', print_server);
+                            localStorage.setItem('ptcall', '');
+                            window.location.href = 'index.html';
+                        }
+                    });
+                }
+            }
+
+            function toggleMicrophone() {
+
+                // var pcall = '0';
+                // var pcall = ptcall1;
+                var microphoneIcon = document.getElementById("microphone-icon");
+                Swal.fire({
+                    title: 'การตั้งค่าเชื่อมต่อเครื่องเสียง \nต้องการให้เครื่องนี้เป็นเครื่องสำหรับออกเสียงเรียกรับยา?',
+                    showDenyButton: true,
+                    // showCancelButton: true,
+                    confirmButtonText: 'ต้องการ',
+                    denyButtonText: `ไม่ต้องการ`,
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        // Swal.fire('Saved!', '', 'success')
+                        $.ajax({
+                            method: 'POST',
+                            data: { ptcall: '1' },
+                            url: "updateptcall.php",
+                            success: function (data) {
+                                // window.location = window.location.href;
+                            }
+                        });
+                        microphoneIcon.className = "fa fa-microphone";
+                        // $('#txtPtcall').val('1');
+
+                    } else if (result.isDenied) {
+                        $.ajax({
+                            method: 'POST',
+                            data: { ptcall: '0' },
+                            url: "updateptcall.php",
+                            success: function (data) {
+                                // window.location = window.location.href;
+                            }
+                        });
+                        microphoneIcon.className = "fa fa-microphone-slash";
+                        // $('#txtPtcall').val('0');
+                        //   Swal.fire('Changes are not saved', '', 'info')
+                    }
+                })
+
+
+                // $.ajax({
+                //     method: 'POST',
+                //     data: { ptcall: pcall },
+                //     url: "updateptcall.php",
+                //     success: function (data) {
+                //         // window.location = window.location.href;
+                //     }
+                // });
+
+            }
+
+            async function showClipYoutube() {
+                videoid = getYoutubeclip();
+
+                const { value: text } = await Swal.fire({
+                    input: 'textarea',
+                    inputLabel: 'Message',
+                    inputValue: videoid,
+                    inputPlaceholder: 'Type your message here...',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here'
+                    },
+                    showCancelButton: true
+                })
+
+                if (text) {
+                    Swal.fire(text)
+                }
+            }
+
+            function selectChanel() {
+                var pttcall = $('#ptcall').val();
+                Swal.fire({
+                    title: 'ตั้งค่าเชื่อมต่อเครื่องเสียง \nเลือกเครื่อง PC หรือช่องจ่ายยา สำหรับเชื่อมต่อออกลำโพง?',
+                    input: 'select',
+                    inputOptions: {
+                        '1': 'ช่องจ่ายยา 1',
+                        '2': 'ช่องจ่ายยา 2',
+                        '3': 'ช่องจ่ายยา 3',
+                        '4': 'ช่องจ่ายยา 4',
+                        '5': 'ช่องจ่ายยา 5',
+                        '6': 'ช่องจ่ายยา 6',
+                        '7': 'ช่องจ่ายยา 7',
+                        '8': 'ช่องจ่ายยา 8',
+                        '9': 'ช่องจ่ายยา 9',
+                        '10': 'ช่องจ่ายยา 10'
+                    },
+
+                    inputValue: pttcall,
+                    showCancelButton: true,
+                    cancelButtonText: 'ยกเลิก',
+                    confirmButtonText: 'ตกลง',
+                    preConfirm: (selectedValue) => {
+                        // เรียกใช้งานฟังก์ชันที่คุณต้องการทำต่อ
+                        // alert(selectedValue);
+                        $.ajax({
+                            method: 'POST',
+                            data: { chanel: selectedValue },
+                            url: "updateptcall2.php",
+                            success: function (data) {
+                                // หากคุณต้องการดำเนินการอื่น ๆ หลังจากที่ค่าถูกเลือกแล้วในการเรียกใช้ Ajax
+                            }
+                        });
+                    }
+                });
+
+            }
+
+
+        </script>
+
+    </body>
+
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>เรียกรับยาโรงพยาบาลนาแก อ.นาแก จ.นครพนม</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <!-- สำหรับ autocomplete -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+    <script src="rxqscript.js"></script>
+    <link rel="stylesheet" href="rxqstyle.css">
+
+  </head>
+
+  <body>
+    <!-- ##################################################################################### -->
+    <!-- formdrugusage -->
+
+    <div id="dataContainer"></div>
+    <div id="formeditusage" class="formeditusage">
+      <div class="formeditusage-content">
+
+        <table class="table" style="width:100%;background-color: #D5D8DC;">
+          <!-- class="table"  -->
+          <tr>
+            <td style="width:100%;">
+              <input type="text" id="txtshortlist" placeholder="Search...">
+              <button id="btnSaveUsage" onclick="updateptdrugusage()" class="btn btn-secondary  btn-sm"><i
+                  class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;บันทึกการแก้ไข</button>&nbsp;
+              <!-- <button id="btnSpUse" class="btn btn-secondary  btn-sm"><i class="fa fa-pencil-square-o" -->
+              <!-- aria-hidden="true"></i>&nbsp;กำหนดเอง</button>&nbsp; -->
+
+              <span onclick="cloaseformdrugusage()" class="btn btn-alert btn-sm"
+                style="float: right;cursor: pointer;">ปิด</span>
+
+            </td>
+          </tr>
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+              Code :<span type="text"
+                style="font-size: 18px;margin-left: 10px;margin-top: 10px;background-color: #FFFFFF;"
+                id="txtCode"></span><br>
+              Line1 :<input type="text"
+                style="width:70%;font-size: 18px;margin-left: 10px;margin-top: 10px;background-color: #FFFFFF;"
+                id="txtLine1"><br>
+              Line2 :<input type="text"
+                style="width:70%;font-size: 18px;margin-left: 10px;margin-top: 10px;background-color: #FFFFFF;"
+                id="txtLine2"><br>
+              Line3 :<input type="text"
+                style="width:70%;font-size: 18px;margin-left: 10px;margin-top: 10px;background-color: #FFFFFF;"
+                id="txtLine3"><br>
+              <input type="hidden" id="txtDrugUsage">
+              <input type="hidden" id="txtSp_Use">
+              <input type="hidden" id="txtHos_Guid">
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+    <!-- /////////////////////////////////////////////////////////////// -->
+    <!-- form med error -->
+
+    <div id="formmederror" class="formmederror">
+      <div class="formmederror-content">
+
+        <table class="w3-table" style="width:100%;">
+          <!-- class="table"  -->
+          <tr>
+            <td style="width:100%;background-color: #FFFFFF;">
+              <span>บันทึก Med Error</span>
+              <span onclick="cloaseformmederror()" class="btn btn-alert btn-sm"
+                style="float: right;cursor: pointer;">ปิด</span>
+
+            </td>
+          </tr>
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+              วันที่เกิดเหตุการณ์ :<input type="date"
+                style="margin-left: 10px;margin-top: 10px;background-color: #FFFFFF;" id="txtErrprDate">
+
+            </td>
+          </tr>
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+              หน่วยงานที่เกิดเหตุการณ์ :&nbsp;&nbsp;<select id="txtErrprDep" style="height: 30px;">
+                <option value="OPD">OPD</option>
+                <option value="IPD">IPD</option>
+                <option value="PCU">รพ.สต.</option>
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+
+              เหตุการณ์ :&nbsp;&nbsp;<select id="txtErrorEvent" style="height: 30px;"
+                onchange="updateTxtErrorDetail(this.value)">
+                <option value="0"></option>
+                <option value="1">Prescribing Error(การสั่งยา)</option>
+                <option value="2">Pre-dispensing Error (ก่อนการจ่ายยา)</option>
+                <option value="3">Dispensing Error (กระบวนการจ่ายยา)</option>
+                <option value="4">Administration Error (การบริหารยา)</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+              รายละเอียด :&nbsp;&nbsp;<select id="txtErrorDetail" style="height: 30px;">
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+              รายการยาที่เกิดเหตุการณ์ :&nbsp;&nbsp;<input type="text" id="txtErrorItems1" style="width:50%;">
+              <input type="hidden" id="txtIcode1">
+            </td>
+          </tr>
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+              คู่ยาที่เกิดเหตุการณ์ :&nbsp;&nbsp;<input type="text" id="txtErrorItems2" style="width:50%;">
+              <input type="hidden" id="txtIcode2">
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+
+              ระดับความรุนแรง :&nbsp;&nbsp;<select id="txtErrorLevel" style="height: 30px;">
+                <option value="A">A : ไม่มีความคลาดเคลื่อนเกิดขึ้น แต่มีเหตุการณ์ที่อาจก่อให้เกิดความคลาดเคลื่อนได้
+                </option>
+                <option value="B">B : เกิดความคลาดเคลื่อนขึ้นแต่ยังไม่ถึงตัวผู้ป่วย</option>
+                <option value="C">C : เกิดความคลาดเคลื่อนกับผู้ป่วยแต่ไม่ทำให้ผู้ป่วยได้รับอันตราย</option>
+                <option value="D">D : เกิดความคลาดเคลื่อนกับผู้ป่วยส่งผลให้ต้องมีการเฝ้าระวัง
+                  เพื่อให้ความมั่นใจว่าไม่เกิดอันตรายต่อผู้ป่วย</option>
+                <option value="E">E : เกิดความคลาดเคลื่อนกับผู้ป่วยส่งผลให้เกิดอันตรายชั่วคราว และต้องมีการบำบัดรักษา
+                </option>
+                <option value="F">F :
+                  เกิดความคลาดเคลื่อนกับผู้ป่วยส่งผลให้เกิดอันตรายชั่วคราวและต้องนอนโรงพยาบาลหรืออยู่โรงพยาบาลนานขึ้น
+                </option>
+                <option value="G">G : เกิดความคลาดเคลื่อนกับผู้ป่วยส่งผลให้เกิดอันตรายถาวรกับผู้ป่วย</option>
+                <option value="H">H : เกิดความคลาดเคลื่อนกับผู้ป่วยส่งผลให้ต้องทำการช่วยชีวิต</option>
+                <option value="I">I : เกิดความคลาดเคลื่อนกับผู้ป่วยส่งผลให้ผู้ป่วยเสียชีวิต</option>
+
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+
+              อธิบายรายละเอียดเหตุการณ์และการแก้ไข <input type="text" id="txtSolve" style="width:80%;" />
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+
+              <button id="btnSaveMedError" onclick="savemederror()" class="btn btn-secondary  btn-sm"><i
+                  class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;บันทึกข้อมูล</button>&nbsp;
+              <button id="btnNewMedError" onclick="clearformmederror()" class="btn btn-secondary  btn-sm"><i
+                  class="fa fa-file-o" aria-hidden="true"></i>&nbsp;เพิ่มข้อมูลใหม่</button>&nbsp;
+            </td>
+          </tr>
+          <tr>
+            <td style="width:100%;background-color: #EAECEE;">
+
+              &nbsp;
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- <input type="hidden" id="txtPtcall"class="display-hide"> -->
+    <!-- <iframe id="txtPtcall" style="border: none;" ></iframe> -->
+    <!-- <div id="txtPtcall" ></div> -->
+    <iframe id="resultFrame" class="display-hide"></iframe>
+    <iframe id="resultFrame1" class="display-hide"></iframe>
+    <iframe id="resultFrameAdmit1" class="display-hide"></iframe>
+    <div class="pcontainer">
+      <div class="pcolumn p1">
+        <table class="b-table" style="width:100%;background-color: #E5E8E8;">
+          <tr>
+            <td style="width:100%;">
+
+              <div style="width:100%; margin-top: 5px; background-color: #E5E7E9;">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="width:100%;display: flex;">
+
+              <div style="display: flex;background-color: #C0C0C0;">
+                <!-- <span>HN,AN หรือ Q&nbsp;&nbsp;</span> -->
+                <input type="text" id="txtSEARCH" style="width:30%" placeholder="HN,AN,Q"> &nbsp;&nbsp;
+                <button id="btnHome" class="btn btn-secondary  btn-sm"><i class="fa fa-home"></i>&nbsp;
+                  เริ่มต้น</button>&nbsp;
+                <button onclick="displayformmederrore()" class="btn btn-secondary  btn-sm"><i class="fa fa-plus"
+                    aria-hidden="true"></i>&nbsp;Med Error</button>
+                &nbsp;
+                <!-- <button onclick="callptadmit()" class="btn btn-secondary  btn-sm"><i class="fa fa-microphone"
+                    aria-hidden="true"></i>&nbsp;เรียกรับยา Admit</button>
+                &nbsp; -->
+                <button onclick="userdefinetextcall()" class="btn btn-secondary  btn-sm"><i class="fa fa-microphone"
+                    aria-hidden="true"></i>&nbsp;สร้างข้อความ</button>
+
+              </div>
+              <span style="width:200px;float: right;text-align: center;">&nbsp;ช่องรับยา:&nbsp;</span>
+              <input type="text" style="width:50px;float: right" id="txtChanel">&nbsp;&nbsp;
+              <!-- <label for="printserver" style="width:200px;float: right;">Print Server:</label>
+              <select id="printserver" name="printserver" style="width:200px;float: right;"></select>&nbsp;&nbsp; -->
+              <!-- <label for="connectmi" style="width:100px;float: right;">กำหนด:</label> -->
+              <!-- <select id="connectmi" name="connectmi" style="width:100px;float: right;" onchange="updatemainmi()">
+                <option value=""></option>
+                <option value="1">ต่อลำโพง</option>
+              </select>&nbsp;&nbsp; -->
+              <!-- <button id="voice" style="width:200px;float: right;" onclick="toggleMicrophone()" class="btn btn-light btn-sm">
+                <i id="microphone-icon" class="fa fa-microphone" aria-hidden="true"></i>&nbsp;เชื่อมต่่อเครื่องเสียง
+              </button> -->
+              <input type="hidden" id="txtPtcall" style="width:2%;"><br>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width:100%;">
+
+              <div id="ovst"></div>
+            </td>
+          </tr>
+
+        </table>
+
+
+
+      </div>
+      <!-- </div> -->
+
+      <!-- <div class="splitter"></div> -->
+
+      <!-- <div class="pcontainer"> -->
+      <div class="pcolumn p2">
+
+        <span class="logout" onclick="logout()" style="float: center;cursor: pointer;">Logout</span>
+        <button onclick="" class="btn btn-secondary  btn-sm" style="float: right;"><i class="fa fa-ellipsis-v"
+            aria-hidden="true"></i></button>
+
+        <span>&nbsp;Login by : </span>
+        <span id="fullname" style="text-align: end;"></span><br>
+
+        <input type="hidden" id="pttocall1">
+        <input type="hidden" id="chanel1">
+        <input type="hidden" id="call1">
+
+        <h5>&nbsp;รายชื่อผู้ป่วยรอรับยา</h5>
+
+
+        <table id="dataTableCall" class="tablex" style="width:100%; ">
+
+          <tbody></tbody>
+        </table>
+
+
+        <!-- <p>เนื้อหาคอลัมน์ 2</p> -->
+      </div>
+    </div>
+
+    <!-- </div> -->
+
+  </body>
+
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แสงแฟล็ต</title>
+    <style>
+        body {
+            background-color: black; /* สีพื้นหลังเริ่มต้นเป็นสีดำ */
+        }
+        .flashlight {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            border-radius: 50%;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button id="flashlightButton">เปิดแสงแฟล็ต</button>
+    <div class="flashlight" id="flashlight"></div>
+    <script>
+        const flashlightButton = document.getElementById('flashlightButton');
+        const flashlight = document.getElementById('flashlight');
+        
+        flashlightButton.addEventListener('click', () => {
+            flashlight.style.display = 'block'; // แสดงแสงแฟล็ตเมื่อปุ่มถูกคลิก
+            setTimeout(() => {
+                flashlight.style.display = 'none'; // ซ่อนแสงแฟล็ตหลังจากเวลาที่กำหนด
+            }, 1000); // ในกรณีนี้, แสงแฟล็ตจะแสดงเป็นเวลา 1 วินาที (1000 มิลลิวินาที)
+        });
+    </script>
+</body>
+</html>
